@@ -5,6 +5,7 @@ import { Alert, AlertDescription, AlertTitle } from "./ui/alert"
 import { Badge, BadgeProps } from "./ui/badge"
 import { Button } from "./ui/button"
 import { toast } from "react-hot-toast"
+import { cn } from "@/lib/utils"
 
 interface ApiAlertProps {
     title: string,
@@ -32,7 +33,11 @@ export const ApiAlert: React.FC<ApiAlertProps> = ({ title, description, variant 
             <Server className="h-4 w-4" />
             <AlertTitle className="flex items-center gap-x-2">
                 {title}
-                <Badge variant={variantMap[variant]}>
+                <Badge
+                    variant={variantMap[variant]}
+                    className={
+                        cn('bg-green-400 text-white hover:bg-green-500 hover:cursor-pointer', textMap[variant] === "Admin" && 'bg-blue-400 hover:bg-blue-500')}
+                >
                     {textMap[variant]}
                 </Badge>
             </AlertTitle>
