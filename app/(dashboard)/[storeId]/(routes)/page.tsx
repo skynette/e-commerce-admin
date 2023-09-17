@@ -4,7 +4,7 @@ interface DashboardPageProps {
     params: { storeId: string }
 }
 
-const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
+async function DashboardPage({ params }: DashboardPageProps) {
     const store = await prismadb.store.findFirst({
         where: {
             id: params.storeId

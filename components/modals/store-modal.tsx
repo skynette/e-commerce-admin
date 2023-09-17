@@ -75,6 +75,7 @@ const StoreModal = () => {
                                     disabled={loading}
                                     variant="outline"
                                     onClick={storeModal.onClose}
+                                    type='button'
                                 >
                                     Cancel
                                 </Button>
