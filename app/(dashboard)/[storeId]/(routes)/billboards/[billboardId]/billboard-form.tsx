@@ -54,9 +54,13 @@ export default function BillBoardForm({ initialData }: BillBoardFormProps) {
         console.log(data)
         try {
             setLoading(true)
-            await axios.patch(`/api/billboards/${params.storeId}`, data)
+            if (initialData) {
+                await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, data)
+            } else {
+                await axios.post(`/api/${params.storeId}/billboards`, data)
+            }
             router.refresh()
-            toast.success('Store updated successfully.')
+            toast.success(toastMessage)
         } catch (error) {
             toast.error('Something went wrong, please try again.')
         } finally {
@@ -67,12 +71,12 @@ export default function BillBoardForm({ initialData }: BillBoardFormProps) {
     const onDelete = async () => {
         try {
             setLoading(true)
-            await axios.delete(`/api/billboards/${params.storeId}`)
+            await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`)
             router.refresh()
             router.push('/')
-            toast.success('Store deleted successfully.')
+            toast.success('Billboard deleted successfully.')
         } catch (error) {
-            toast.error('Make sure you have no categories in your store before deleting it.')
+            toast.error('Make sure you removed all categories using this billboard before deleting it.')
         } finally {
             setLoading(false)
             setOpen(false)
