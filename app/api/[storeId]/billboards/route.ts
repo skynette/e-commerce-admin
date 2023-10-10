@@ -10,13 +10,14 @@ export async function POST(req: Request, { params }: { params: { storeId: string
 
         const { label, imageUrl } = body
 
-        // check if the user id and name are present
-        if (!userId) return new NextResponse("Unauthorized", { status: 401 })
-        if (!label) return new NextResponse("Missing label", { status: 400 })
-        if (!imageUrl) return new NextResponse("Missing imageUrl", { status: 400 })
+        // check if the user id name and imageUrl are present
+        if (!userId) return new NextResponse("Unauthenticated!", { status: 401 })
+        if (!label) return new NextResponse("Missing label!", { status: 400 })
+        if (!imageUrl) return new NextResponse("Missing imageUrl!", { status: 400 })
 
-        if (!params.storeId) return new NextResponse("Missing storeId", { status: 400 })
+        if (!params.storeId) return new NextResponse("Missing storeId!", { status: 400 })
 
+        // find the store for the current uid
         const storeByUserId = await prismadb.store.findFirst({
             where: {
                 userId,
@@ -49,13 +50,13 @@ export async function GET(req: Request, { params }: { params: { storeId: string 
 
 
         // get the billboard
-        const billboard = await prismadb.billboard.findMany({
+        const billboards = await prismadb.billboard.findMany({
             where: {
                 storeId: params.storeId
             }
         })
 
-        return NextResponse.json(billboard)
+        return NextResponse.json(billboards)
     } catch (error) {
         console.log(`[BILLBOARDS_GET] ${error}`)
         return new NextResponse("Internal Error", { status: 500 })
