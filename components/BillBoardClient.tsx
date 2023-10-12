@@ -7,6 +7,7 @@ import { Separator } from "./ui/separator";
 import { useParams, useRouter } from "next/navigation";
 import { BillBoardColumn, columns } from "@/app/(dashboard)/[storeId]/(routes)/billboards/components/columns";
 import { DataTable } from "./ui/data-table";
+import APIList from "./ui/api-list";
 
 interface BillBoardClientProps {
     data: BillBoardColumn[]
@@ -36,6 +37,9 @@ const BillBoardClient = ({ data }: BillBoardClientProps) => {
                 data={data}
                 searchKey="label"
             />
+            <Heading title="API" description="API endpoints for billboards (for Developers)"/>
+            <Separator />
+            <APIList entityName="billboards" entityIdName="billboardId" />
         </>
     );
 }
