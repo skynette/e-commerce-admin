@@ -14,8 +14,6 @@ import { toast } from "react-hot-toast"
 import axios from "axios"
 import { useParams, useRouter } from "next/navigation"
 import { AlertModal } from "@/components/modals/alert-modal"
-import { ApiAlert } from "@/components/api-alert"
-import { useOrigin } from "@/hooks/use-origin"
 import ImageUpload from "@/components/ui/image-upload"
 
 const formSchema = z.object({
@@ -32,7 +30,6 @@ interface BillBoardFormProps {
 export default function BillBoardForm({ initialData }: BillBoardFormProps) {
     const params = useParams()
     const router = useRouter()
-    const origin = useOrigin()
 
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -68,13 +65,12 @@ export default function BillBoardForm({ initialData }: BillBoardFormProps) {
             setLoading(false)
         }
     }
-
     const onDelete = async () => {
         try {
             setLoading(true)
             await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`)
             router.refresh()
-            router.push('/')
+            router.push(`/${params.storeId}/billboards`)
             toast.success('Billboard deleted successfully.')
         } catch (error) {
             toast.error('Make sure you removed all categories using this billboard before deleting it.')
@@ -148,7 +144,6 @@ export default function BillBoardForm({ initialData }: BillBoardFormProps) {
                     </Button>
                 </form>
             </Form>
-            <Separator />
         </>
     )
 }
