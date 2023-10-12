@@ -49,7 +49,6 @@ export default function CategoryForm({ initialData, billboards }: CategoryFormPr
     })
 
     const onSubmit = async (data: CategoryFormValues) => {
-        console.log(data)
         try {
             setLoading(true)
             if (initialData) {
