@@ -41,7 +41,6 @@ export default function SettingsForm({ initialData }: SettingsFormProps) {
     })
 
     const onSubmit = async (data: SettingsFormValues) => {
-        console.log(data)
         try {
             setLoading(true)
             await axios.patch(`/api/stores/${params.storeId}`, data)

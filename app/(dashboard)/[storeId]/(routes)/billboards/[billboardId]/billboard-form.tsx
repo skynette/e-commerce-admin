@@ -48,7 +48,6 @@ export default function BillBoardForm({ initialData }: BillBoardFormProps) {
     })
 
     const onSubmit = async (data: BillBoardFormValues) => {
-        console.log(data)
         try {
             setLoading(true)
             if (initialData) {

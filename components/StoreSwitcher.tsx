@@ -30,7 +30,6 @@ export default function StoreSwitcher({ className, items = [] }: StoreSwitcherPr
     const [open, setOpen] = useState(false)
 
     const onStoreSelect = (store: { value: string, label: string }) => {
-        console.log("switching stores!")
         setOpen(false)
         router.push(`/${store.value}`)
     }

@@ -8,10 +8,10 @@ import { useParams, useRouter } from "next/navigation"
 import { useState } from "react"
 import axios from "axios"
 import { AlertModal } from "@/components/modals/alert-modal"
-import { SizeColumn } from "./columns"
+import { ColorColumn } from "./columns"
 
 interface CellActionProps {
-    data: SizeColumn
+    data: ColorColumn
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -23,16 +23,16 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
     const onCopy = (id: string) => {
         navigator.clipboard.writeText(id)
-        toast.success('copied.')
+        toast.success('color id copied.')
     }
     const onDelete = async () => {
         try {
             setLoading(true)
-            await axios.delete(`/api/${params.storeId}/sizes/${data.id}`)
+            await axios.delete(`/api/${params.storeId}/colors/${data.id}`)
             router.refresh()
-            toast.success('Size id deleted successfully.')
+            toast.success('Color deleted successfully.')
         } catch (error) {
-            toast.error('Make sure you removed all products using this size before deleting it.')
+            toast.error('Make sure you removed all products using this color before deleting it.')
         } finally {
             setLoading(false)
             setOpen(false)
@@ -57,7 +57,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
                     <DropdownMenuLabel>
                         Actions
                     </DropdownMenuLabel>
-                    <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/sizes/${data.id}`)}>
+                    <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/colors/${data.id}`)}>
                         <Edit className="mr-2 h-4 w-4" />
                         Update
                     </DropdownMenuItem>

@@ -10,7 +10,7 @@ const ColorsPage = async ({ params }: { params: { storeId: string } }) => {
             storeId: params.storeId
         },
         orderBy: {
-            createdAt: "desc"
+            createdAt: 'desc'
         }
     });
 
