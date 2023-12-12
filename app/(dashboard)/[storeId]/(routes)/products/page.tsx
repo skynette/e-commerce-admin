@@ -13,7 +13,7 @@ const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
         },
         include: {
             category: true,
-            store: true,
+            size: true,
             color: true,
         },
         orderBy: {
@@ -28,16 +28,18 @@ const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
         isArchived: item.isArchived,
         price: formatter.format(item.price.toNumber()),
         category: item.category.name,
-        size: item.category.name,
+        size: item.size.name,
         color: item.color.value,
-        createdAt: format(item.createdAt, "MMM do, yyyy"),
-    }))
+        createdAt: format(item.createdAt, 'MMMM do, yyyy'),
+    }));
 
-    return (<div className="flex-col">
-        <div className="flex-1 space-y-4 p-8 pt-6">
-            <ProductClient data={formattedProducts} />
+    return (
+        <div className="flex-col">
+            <div className="flex-1 space-y-4 p-8 pt-6">
+                <ProductClient data={formattedProducts} />
+            </div>
         </div>
-    </div>);
-}
+    );
+};
 
 export default ProductsPage;

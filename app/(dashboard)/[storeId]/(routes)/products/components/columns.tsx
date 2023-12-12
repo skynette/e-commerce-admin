@@ -5,14 +5,14 @@ import { CellAction } from './cell-action'
 
 export type ProductColumn = {
     id: string
-    name: string
-    price: string
-    size: string
-    category: string
-    color: string
-    isFeatured: boolean
-    isArchived: boolean
-    createdAt: string
+    name: string;
+    price: string;
+    // category: string;
+    size: string;
+    color: string;
+    createdAt: string;
+    isFeatured: boolean;
+    isArchived: boolean;
 }
 
 export const columns: ColumnDef<ProductColumn>[] = [
