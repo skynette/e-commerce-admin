@@ -52,11 +52,13 @@ export async function PATCH(request: Request, { params }: { params: { storeId: s
             }
         })
 
-        if (!storeByUserId) return new NextResponse("Unauthorized", { status: 401 })
+        if (!storeByUserId) {
+            return new NextResponse("Unauthorized", { status: 405 });
+        }
 
         await prismadb.product.update({
             where: {
-                id: params.productId,
+                id: params.productId
             },
             data: {
                 name,
@@ -65,14 +67,13 @@ export async function PATCH(request: Request, { params }: { params: { storeId: s
                 colorId,
                 sizeId,
                 images: {
-                    deleteMany: {}
+                    deleteMany: {},
                 },
                 isFeatured,
                 isArchived,
-            }
-        })
+            },
+        });
 
-        // why
         const product = await prismadb.product.update({
             where: {
                 id: params.productId
@@ -80,10 +81,12 @@ export async function PATCH(request: Request, { params }: { params: { storeId: s
             data: {
                 images: {
                     createMany: {
-                        data: images.map((image: string) => ({ imageUrl: image }))
-                    }
-                }
-            }
+                        data: [
+                            ...images.map((image: { url: string }) => image),
+                        ],
+                    },
+                },
+            },
         })
 
         return NextResponse.json(product)
@@ -111,7 +114,7 @@ export async function DELETE(request: Request, { params }: { params: { storeId: 
         if (!storeByUserId) return new NextResponse("Unauthorized", { status: 401 })
 
 
-        const product = await prismadb.product.deleteMany({
+        const product = await prismadb.product.delete({
             where: {
                 id: params.productId
             },

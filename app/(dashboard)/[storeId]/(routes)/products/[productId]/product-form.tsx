@@ -52,22 +52,24 @@ export default function ProductForm({ initialData, categories, colors, sizes }: 
     const toastMessage = initialData ? "product updated" : "product created"
     const action = initialData ? "Save changes" : "create"
 
+    const defaultValues = initialData ? {
+        ...initialData,
+        price: parseFloat(String(initialData?.price)),
+    } : {
+        name: '',
+        images: [],
+        price: 0,
+        categoryId: '',
+        colorId: '',
+        sizeId: '',
+        isFeatured: false,
+        isArchived: false,
+    }
+
     const form = useForm<ProductFormValues>({
         resolver: zodResolver(formSchema),
-        defaultValues: initialData ? {
-            ...initialData,
-            price: parseFloat(initialData.price.toString()),
-        } : {
-            name: '',
-            images: [],
-            price: 0,
-            categoryId: '',
-            colorId: '',
-            sizeId: '',
-            isFeatured: false,
-            isArchived: false,
-        }
-    })
+        defaultValues
+    });
 
     const onSubmit = async (data: ProductFormValues) => {
         try {
@@ -271,7 +273,7 @@ export default function ProductForm({ initialData, categories, colors, sizes }: 
                             render={({ field }) => (
                                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                                     <FormControl>
-                                        <Checkbox 
+                                        <Checkbox
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
@@ -293,7 +295,7 @@ export default function ProductForm({ initialData, categories, colors, sizes }: 
                             render={({ field }) => (
                                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                                     <FormControl>
-                                        <Checkbox 
+                                        <Checkbox
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
                                         />
