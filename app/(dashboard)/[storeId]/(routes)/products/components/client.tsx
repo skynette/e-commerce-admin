@@ -35,7 +35,7 @@ const ProductClient = ({ data }: ProductClientProps) => {
             <DataTable
                 columns={columns}
                 data={data}
-                searchKey="label"
+                searchKey="name"
             />
             <Heading title="API" description="API endpoints for products (for Developers)"/>
             <Separator />
