@@ -11,6 +11,9 @@ export async function GET(request: Request, { params }: { params: { categoryId: 
             where: {
                 id: params.categoryId
             },
+            include:{
+                billboard: true,
+            }
         })
         return NextResponse.json(category)
     } catch (error) {
