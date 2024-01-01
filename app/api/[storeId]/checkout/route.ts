@@ -37,6 +37,8 @@ export async function POST(req: Request, { params }: { params: { storeId: string
         data: {
             storeId: params.storeId,
             isPaid: false,
+            phone: customer.phone,
+            address: customer.address,
             orderItems: {
                 create: productIds.map((productId: string) => ({
                     product: {
@@ -51,7 +53,8 @@ export async function POST(req: Request, { params }: { params: { storeId: string
 
     const orderId = order.id
 
-    let hehe = JSON.stringify({
+    // Constructing the payload
+    const payload = {
         "tx_ref": orderId,
         "amount": totalPrice,
         "currency": "NGN",
@@ -61,36 +64,27 @@ export async function POST(req: Request, { params }: { params: { storeId: string
             "store_id": params.storeId,
             "products": productIds
         },
-        "customer": {
-            "email": customer.email,
-            "phonenumber": "08012345678",
-            "name": customer.name
-        },
+        "customer": customer,
         "customizations": {
             "title": "Payment for items in cart",
             "logo": "https://images.unsplash.com/photo-1628527304948-06157ee3c8a6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         }
-    });
-
-    let config = {
-        method: 'post',
-        maxBodyLength: Infinity,
-        url: 'https://api.flutterwave.com/v3/payments',
-        headers: {
-            'Authorization': SECRET_KEY,
-            'Content-Type': 'application/json'
-        },
-        data: hehe
     };
-
+    console.log(payload);
     try {
-        const response = await axios.request(config)
-        const result = (JSON.stringify(response.data))
-        return new NextResponse(result, { headers: corsHeaders })
+        const response = await axios.post('https://api.flutterwave.com/v3/payments', payload, {
+            headers: {
+                'Authorization': SECRET_KEY,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const result = JSON.stringify(response.data);
+        return new NextResponse(result, { headers: corsHeaders });
 
     } catch (error) {
-        console.log(error);
-        return new NextResponse("Error occurred", { headers: corsHeaders })
+        console.error(error);
+        return new NextResponse("Error occurred", { headers: corsHeaders });
     }
 
 
