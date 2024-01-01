@@ -52,13 +52,13 @@ export async function POST(req: Request, { params }: { params: { storeId: string
     })
 
     const orderId = order.id
-
+    const FRONT_END_URL = process.env.NEXT_PUBLIC_FRONTEND_URL
     // Constructing the payload
     const payload = {
         "tx_ref": orderId,
         "amount": totalPrice,
         "currency": "NGN",
-        "redirect_url": "http://localhost:3001/cart?success=1",
+        "redirect_url": `${FRONT_END_URL}/cart?success=1`,
         "meta": {
             "order_id": orderId,
             "store_id": params.storeId,
