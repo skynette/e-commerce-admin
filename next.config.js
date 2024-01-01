@@ -13,6 +13,14 @@ const nextConfig = {
                     { key: 'Access-Control-Allow-Headers', value: 'Content-Type,Authorization' },
                 ],
             },
+            {
+                source: '/api/:path*',
+                headers: [
+                    { key: 'Access-Control-Allow-Origin', value: 'https://e-commerce-store-josh.vercel.app/' },
+                    { key: 'Access-Control-Allow-Methods', value: 'GET,POST,OPTIONS' },
+                    { key: 'Access-Control-Allow-Headers', value: 'Content-Type,Authorization' },
+                ],
+            },
         ];
     },
 }
